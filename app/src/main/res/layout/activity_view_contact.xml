@@ -29,7 +29,7 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:id="@+id/contactName"
-                android:hint="Gabriele Ruini"/>
+                android:hint="Gabriele Ruini è scemo"/>
 
         </LinearLayout>
 
