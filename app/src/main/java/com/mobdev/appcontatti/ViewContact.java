@@ -28,23 +28,22 @@ public class ViewContact extends AppCompatActivity {
         cName = findViewById(R.id.visual_nome);
         cMobile = findViewById(R.id.visual_mobile);
         cEmail = findViewById(R.id.visual_email);
+        cAddress = findViewById(R.id.visual_indirizzo);
 
 
         Intent intent = getIntent();
 
         contact_name = intent.getStringExtra("name");
         contact_surname = intent.getStringExtra("surname");
-        contact_email = intent.getStringExtra("email");
         contact_mobile = intent.getStringExtra("number");
+        contact_email = intent.getStringExtra("email");
+        contact_address = intent.getStringExtra("address");
+
 
         cName.setText(contact_name + " " + contact_surname);
         cEmail.setText(contact_email);
         cMobile.setText(contact_mobile);
-
-
-
-
-
+        cAddress.setText(contact_address);
 
 
 

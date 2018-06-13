@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.mobdev.appcontatti.AddActivity;
 import com.mobdev.appcontatti.DbHelper;
 import com.mobdev.appcontatti.Model.Contatto;
+import com.mobdev.appcontatti.Model.SummaryListener;
 import com.mobdev.appcontatti.MyAdapter;
 import com.mobdev.appcontatti.R;
 import com.mobdev.appcontatti.ViewContact;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 
  */
 
-public class ContactsList extends Fragment  {
+public class ContactsList extends Fragment implements SummaryListener {
 
     private ImageButton addButton = null;
     private RecyclerView mRecyclerView = null;
@@ -142,10 +143,22 @@ public class ContactsList extends Fragment  {
             ));
         }
 
-        myAdapter = new MyAdapter(contactsList);
+        myAdapter = new MyAdapter(contactsList, this);
         mRecyclerView.setAdapter(myAdapter);
 
     }
 
 
+    @Override
+    public void onClick(Contatto contact) {
+        Intent intent = new Intent(getActivity(), ViewContact.class);
+
+        intent.putExtra("name", contact.getName());
+        intent.putExtra("surname", contact.getSurname());
+        intent.putExtra("number", contact.getPhoneNumber());
+        intent.putExtra("email", contact.getEmail());
+        intent.putExtra("address", contact.getAddress());
+
+        startActivity(intent);
+    }
 }

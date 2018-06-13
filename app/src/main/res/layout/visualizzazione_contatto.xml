@@ -75,4 +75,28 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="indirizzo"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="indirizzo"
+            android:id="@+id/visual_indirizzo"
+            android:layout_weight="1"/>
+
+
+
+    </LinearLayout>
+
 </LinearLayout>
