@@ -55,9 +55,7 @@ public class AddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        // getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
     }
-
 
 
 
@@ -75,15 +73,8 @@ public class AddActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_save) {
-            if(mName.getText().toString().isEmpty()){
-                Toast.makeText(mContext, "Aggiungi Nome!", Toast.LENGTH_LONG);
-                return false;
-            }
-            else {
-
                 saveContact();
                 Log.d(TAG, "contatto salvato");
-            }
 
         }
 
@@ -101,20 +92,28 @@ public class AddActivity extends AppCompatActivity {
 
     private void saveContact() {
 
-        Log.d(TAG, "Prima del contact manager");
-        ContactManager.getInstance(mContext).addContact(new Contatto(mName.getText().toString(), mSurname.getText().toString(), mPhoneNumber.getText().toString(), mEmail.getText().toString(), mAddress.getText().toString()));
-        Log.d(TAG, "Dopo del contact manager");
-        Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT);
+        String nome, cognome, numero, email, indirizzo;
+
+        nome = mName.getText().toString();
+        cognome = mSurname.getText().toString();
+        numero = mPhoneNumber.getText().toString();
+        email = mEmail.getText().toString();
+        indirizzo = mAddress.getText().toString();
+
+        DbHelper dbHelper = new DbHelper(mContext);
+        Contatto contatto = new Contatto(nome, cognome, numero, email, indirizzo);
+
+        if(dbHelper.addContact(contatto)) {
+            Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "Errore nel salvataggio", Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
 
     }
-
-
-
-
 
 
 

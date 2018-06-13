@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.mobdev.appcontatti.Model.Contatto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -45,8 +44,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     //Sostituisce il contenuto della view
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setText("" + mDataset.get(position).getName() + " " + mDataset.get(position).getSurname());
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        holder.setText("" + mDataset.get(position).getName()  /* " " + mDataset.get(position).getSurname()*/ );
+
 
     }
 
@@ -54,7 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         private View v = null;
 
-        public ViewHolder(View v) {
+        public ViewHolder(final View v) {
             super(v);
             this.v = v;
 
@@ -66,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Log.d(MainActivity.TAG, "Ho premuto un contatto : " + getAdapterPosition() );
 
+
                     // tramite putExtra passo i dati del contesto in ViewContact
                     Intent n = new Intent(context, ViewContact.class);
                     n.putExtra("contatto",  mDataset.get(getAdapterPosition()));
@@ -73,6 +74,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 }
             });
         }
+
+
 
         public void setText(String text) {
             TextView tView = (TextView) v.findViewById(R.id.nome);

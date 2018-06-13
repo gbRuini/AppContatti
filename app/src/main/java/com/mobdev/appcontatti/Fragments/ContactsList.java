@@ -1,4 +1,4 @@
-package com.mobdev.appcontatti;
+package com.mobdev.appcontatti.Fragments;
 
 
 import android.content.Context;
@@ -8,18 +8,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
+import android.widget.Toast;
 
+import com.mobdev.appcontatti.AddActivity;
+import com.mobdev.appcontatti.DbHelper;
 import com.mobdev.appcontatti.Model.Contatto;
+import com.mobdev.appcontatti.MyAdapter;
+import com.mobdev.appcontatti.R;
+import com.mobdev.appcontatti.ViewContact;
 
 import java.util.ArrayList;
 
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 
  */
 
-public class ContactsList extends Fragment {
+public class ContactsList extends Fragment  {
 
     private ImageButton addButton = null;
     private RecyclerView mRecyclerView = null;
@@ -64,10 +67,9 @@ public class ContactsList extends Fragment {
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        // creo un array list di contatti e tramite il contactmanager ci copio tutto il db
-        ArrayList<Contatto> contactsList = new ArrayList<>();
+        setupContactList();
 
-        contactsList = ContactManager.getInstance(mContext).getContactList();
+        /*contactsList = ContactManager.getInstance(mContext).getContactList();*/
         mRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,17 +78,7 @@ public class ContactsList extends Fragment {
             }
         });
 
-    /*
-        contactsList.add(new Contatto("Gabriele", "Ruini", "Via Villa Glori", "3345544321", "Mobile", "ruinig@gmail.com", "cias"));
-        contactsList.add(new Contatto("Nico", "Sant", "Via Villa Glori", "3215244321", "Mobile", "ruinig@gmail.com", "cias"));
-        contactsList.add(new Contatto("Gabriele", "Ruini", "Via Villa Glori", "3345544321", "Mobile", "ruinig@gmail.com", "cias"));
-        contactsList.add(new Contatto("Nico", "Sant", "Via Villa Glori", "3215244321", "Mobile", "ruinig@gmail.com", "cias"));
-        contactsList.add(new Contatto("Gabriele", "Ruini", "Via Villa Glori", "3345544321", "Mobile", "ruinig@gmail.com", "cias"));
-        contactsList.add(new Contatto("Nico", "Sant", "Via Villa Glori", "3215244321", "Mobile", "ruinig@gmail.com", "cias"));
-*/
-     // passo l'array di contatti all'adapter
-        myAdapter  = new MyAdapter(contactsList);
-        mRecyclerView.setAdapter(myAdapter);
+
 
         mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -123,6 +115,35 @@ public class ContactsList extends Fragment {
         });
 
         return view;
+
+    }
+
+
+    private void setupContactList() {
+
+        // creo un array list di contatti
+        ArrayList<Contatto> contactsList = new ArrayList<>();
+
+        DbHelper dbHelper = new DbHelper(getActivity());
+        Cursor cursor = dbHelper.getAllContacts();
+
+        if(!cursor.moveToNext()) {
+            Toast.makeText(getActivity(), "Non ci sono contatti!", Toast.LENGTH_LONG).show();
+        }
+
+        //itero attraverso le righe del db
+        while (cursor.moveToNext()) {
+            contactsList.add(new Contatto(
+                    cursor.getString(1),    // nome
+                    cursor.getString(2),    // cognome
+                    cursor.getString(3),    // numero
+                    cursor.getString(4),   // email
+                    cursor.getString(5)    // indirizzo
+            ));
+        }
+
+        myAdapter = new MyAdapter(contactsList);
+        mRecyclerView.setAdapter(myAdapter);
 
     }
 
