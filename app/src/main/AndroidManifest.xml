@@ -22,8 +22,13 @@
             android:name=".AddActivity"
             android:label="Aggiungi Contatto"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditContact" />
-        <activity android:name=".ViewContact"></activity>
+
+        <activity android:name=".EditContact"
+            android:label="Modifica Contatto"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".ViewContact"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

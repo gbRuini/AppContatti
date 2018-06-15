@@ -48,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     //Sostituisce il contenuto della view
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.setText("" + mDataset.get(position).getName()  /* " " + mDataset.get(position).getSurname()*/ );
+        holder.setText("" + mDataset.get(position).getName() + " " + mDataset.get(position).getSurname());
         holder.v.setTag(holder);
 
 

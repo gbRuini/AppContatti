@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -105,8 +106,6 @@ public class ContactsList extends Fragment implements SummaryListener {
             @Override
             public void onClick(View view) {
 
-
-
                 //creo intent per passare da un activity all'altra
                 Intent intent = new Intent(getActivity(), AddActivity.class);
                 startActivity(intent);
@@ -153,6 +152,7 @@ public class ContactsList extends Fragment implements SummaryListener {
     public void onClick(Contatto contact) {
         Intent intent = new Intent(getActivity(), ViewContact.class);
 
+        intent.putExtra("cont", contact);
         intent.putExtra("name", contact.getName());
         intent.putExtra("surname", contact.getSurname());
         intent.putExtra("number", contact.getPhoneNumber());
@@ -161,4 +161,6 @@ public class ContactsList extends Fragment implements SummaryListener {
 
         startActivity(intent);
     }
+
+
 }
