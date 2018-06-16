@@ -1,17 +1,14 @@
 package com.mobdev.appcontatti;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mobdev.appcontatti.Fragments.ContactsList;
 import com.mobdev.appcontatti.Model.Contatto;
-import com.mobdev.appcontatti.Model.DataToActivity;
 
 import java.util.ArrayList;
 

@@ -38,6 +38,7 @@
                     android:padding="25dp">
 
                     <ImageView
+                        android:id="@+id/profileImage"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_alignParentLeft="true"
@@ -131,9 +132,8 @@
                         android:inputType="phone"
                         android:textSize="16sp" />
 
-                    <!--
 
-                Aggiungi modo per selezionare altri tipi di numero
+                <!-- Aggiungi modo per selezionare altri tipi di numero -->
 
                 <Spinner
                     android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
                     android:paddingLeft="25dp">
 
                 </Spinner>
-                -->
+
                 </RelativeLayout>
 
 

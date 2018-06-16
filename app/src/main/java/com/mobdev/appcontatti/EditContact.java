@@ -79,12 +79,10 @@ public class EditContact extends AppCompatActivity {
 
         if(id == android.R.id.home) {
             //NavUtils.navigateUpFromSameTask(this);
-            /*
-            Intent intent = new Intent(this, ViewContact.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(intent, 0);
+
+            backIntent();
             return true;
-            */
+
         }
 
         return super.onOptionsItemSelected(item);
