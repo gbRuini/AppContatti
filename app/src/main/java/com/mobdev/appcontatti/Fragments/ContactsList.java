@@ -204,7 +204,10 @@ public class ContactsList extends Fragment implements SummaryListener {
                     item.getSurname().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
+/*
 
+kjgkjhjkhkhkjh
+ */
         }
 
         myAdapter.filterList(filteredList);
