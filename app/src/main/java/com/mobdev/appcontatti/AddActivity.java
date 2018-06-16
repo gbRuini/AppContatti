@@ -2,26 +2,16 @@ package com.mobdev.appcontatti;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mobdev.appcontatti.Model.Contatto;
-
-import static android.content.ContentValues.TAG;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -53,18 +43,16 @@ public class AddActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       // getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
-
 
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_add_contact, menu);
         return true;
     }
 
@@ -75,15 +63,8 @@ public class AddActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_save) {
-            if(mName.getText().toString().isEmpty()){
-                Toast.makeText(mContext, "Aggiungi Nome!", Toast.LENGTH_LONG);
-                return false;
-            }
-            else {
-
                 saveContact();
                 Log.d(TAG, "contatto salvato");
-            }
 
         }
 
@@ -101,20 +82,28 @@ public class AddActivity extends AppCompatActivity {
 
     private void saveContact() {
 
-        Log.d(TAG, "Prima del contact manager");
-        ContactManager.getInstance(mContext).addContact(new Contatto(mName.getText().toString(), mSurname.getText().toString(), mPhoneNumber.getText().toString(), mEmail.getText().toString(), mAddress.getText().toString()));
-        Log.d(TAG, "Dopo del contact manager");
-        Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT);
+        String nome, cognome, numero, email, indirizzo;
+
+        nome = mName.getText().toString();
+        cognome = mSurname.getText().toString();
+        numero = mPhoneNumber.getText().toString();
+        email = mEmail.getText().toString();
+        indirizzo = mAddress.getText().toString();
+
+        DbHelper dbHelper = new DbHelper(mContext);
+        Contatto contatto = new Contatto(nome, cognome, numero, email, indirizzo);
+
+        if(dbHelper.addContact(contatto)) {
+            Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "Errore nel salvataggio", Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
 
     }
-
-
-
-
 
 
 

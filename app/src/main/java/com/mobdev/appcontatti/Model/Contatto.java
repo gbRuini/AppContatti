@@ -22,13 +22,26 @@ public class Contatto implements Serializable {
 
     }
 
-    public Contatto(String name, String surname, String address, String phoneNumber,  String email) {
+    public Contatto(String name, String surname, String phoneNumber) {
         this.name = name;
         this.surname = surname;
-        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Contatto(String name, String surname, String phoneNumber, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public Contatto(String name, String surname,String phoneNumber, String email, String address) {
+        this.name = name;
+        this.surname = surname;
         this.phoneNumber = phoneNumber;
       //  this.typeNumber = typeNumber;
         this.email = email;
+        this.address = address;
        // this.imageContact = imageContact;
     }
 

@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobdev.appcontatti.Model.Contatto;
+import com.mobdev.appcontatti.Model.SummaryListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -23,11 +23,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private ArrayList<Contatto> mDataset;
     private Context context;
+    private SummaryListener listener;
 
 
-    public MyAdapter(ArrayList<Contatto> myDataset) {
+    public MyAdapter(ArrayList<Contatto> myDataset, SummaryListener myListener) {
 
         mDataset = myDataset;
+        listener = myListener;
 
     }
 
@@ -45,8 +47,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     //Sostituisce il contenuto della view
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.setText("" + mDataset.get(position).getName() + " " + mDataset.get(position).getSurname());
+        holder.v.setTag(holder);
+
 
     }
 
@@ -54,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         private View v = null;
 
-        public ViewHolder(View v) {
+        public ViewHolder(final View v) {
             super(v);
             this.v = v;
 
@@ -66,13 +70,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Log.d(MainActivity.TAG, "Ho premuto un contatto : " + getAdapterPosition() );
 
+                    ViewHolder holder = (ViewHolder) v.getTag();
+                    int position = holder.getLayoutPosition();
+
+                    Contatto contatto = mDataset.get(position);
+                    listener.onClick(contatto);
+
+                    /*
                     // tramite putExtra passo i dati del contesto in ViewContact
                     Intent n = new Intent(context, ViewContact.class);
                     n.putExtra("contatto",  mDataset.get(getAdapterPosition()));
                     context.startActivity(n);
+                    */
                 }
             });
         }
+
+
 
         public void setText(String text) {
             TextView tView = (TextView) v.findViewById(R.id.nome);
@@ -84,5 +98,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+
+    public void filterList(ArrayList<Contatto> filteredList) {
+        mDataset = new ArrayList<>();
+        mDataset.addAll(filteredList);
+        notifyDataSetChanged();
+
     }
 }
