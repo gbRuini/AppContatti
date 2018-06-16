@@ -99,4 +99,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemCount() {
         return mDataset.size();
     }
+
+
+    public void filterList(ArrayList<Contatto> filteredList) {
+        mDataset = new ArrayList<>();
+        mDataset.addAll(filteredList);
+        notifyDataSetChanged();
+
+    }
 }

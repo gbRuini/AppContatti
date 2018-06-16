@@ -5,22 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.LongDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.mobdev.appcontatti.AddActivity;
 import com.mobdev.appcontatti.DbHelper;
 import com.mobdev.appcontatti.Model.Contatto;
+import com.mobdev.appcontatti.Model.DataToActivity;
 import com.mobdev.appcontatti.Model.SummaryListener;
 import com.mobdev.appcontatti.MyAdapter;
 import com.mobdev.appcontatti.R;
@@ -40,11 +45,13 @@ import java.util.ArrayList;
 
 public class ContactsList extends Fragment implements SummaryListener {
 
+
     private ImageButton addButton = null;
     private RecyclerView mRecyclerView = null;
     private LinearLayoutManager mLayoutManager = null;
     private MyAdapter myAdapter = null;
     private Context mContext;
+    private ArrayList<Contatto> contactsList;
 
     public ContactsList() {
     }
@@ -114,6 +121,11 @@ public class ContactsList extends Fragment implements SummaryListener {
             }
         });
 
+        setHasOptionsMenu(true);
+
+        DbHelper helper = new DbHelper(getActivity());
+        Log.d("tag", "Grandezza db: " + helper.grandezzaDb());
+
         return view;
 
     }
@@ -122,7 +134,7 @@ public class ContactsList extends Fragment implements SummaryListener {
     private void setupContactList() {
 
         // creo un array list di contatti
-        ArrayList<Contatto> contactsList = new ArrayList<>();
+        contactsList = new ArrayList<>();
 
         DbHelper dbHelper = new DbHelper(getActivity());
         Cursor cursor = dbHelper.getAllContacts();
@@ -162,5 +174,41 @@ public class ContactsList extends Fragment implements SummaryListener {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        int id = item.getItemId();
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("TAG", "Stai scrivendo nel cerca");
+                filter(newText);
+                return true;
+            }
+        });
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void filter(String text) {
+        ArrayList<Contatto> filteredList = new ArrayList<>();
+
+        for(Contatto item : contactsList) {
+            if(item.getName().toLowerCase().contains(text.toLowerCase()) ||
+                    item.getSurname().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+
+        }
+
+        myAdapter.filterList(filteredList);
+      //  mRecyclerView.setAdapter(myAdapter);
+    }
 
 }

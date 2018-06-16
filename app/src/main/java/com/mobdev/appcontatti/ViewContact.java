@@ -1,7 +1,5 @@
 package com.mobdev.appcontatti;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobdev.appcontatti.Fragments.EditFragment;
 import com.mobdev.appcontatti.Model.Contatto;
-
-import java.io.Serializable;
 
 public class ViewContact extends AppCompatActivity {
 
@@ -27,8 +22,6 @@ public class ViewContact extends AppCompatActivity {
     private CardView mCardEmail;
 
     private Contatto contatto;
-
-    private EditFragment editFragment = null;
 
     private String contact_name, contact_surname, contact_mobile, contact_address, contact_email;
 
@@ -47,7 +40,7 @@ public class ViewContact extends AppCompatActivity {
         cName = findViewById(R.id.contactName);
         cMobile = findViewById(R.id.PhoneInCardView);
         cEmail = findViewById(R.id.emailInCardView);
-        // cAddress = findViewById(R.id.visual_indirizzo);
+        cAddress = findViewById(R.id.etAddress);
 
 
         Intent intent = getIntent();
@@ -57,13 +50,13 @@ public class ViewContact extends AppCompatActivity {
         contact_surname = intent.getStringExtra("surname");
         contact_mobile = intent.getStringExtra("number");
         contact_email = intent.getStringExtra("email");
-       // contact_address = intent.getStringExtra("address");
+        contact_address = intent.getStringExtra("address");
 
 
         cName.setText(contact_name + " " + contact_surname);
         cEmail.setText(contact_email);
         cMobile.setText(contact_mobile);
-       // cAddress.setText(contact_address);
+        cAddress.setText(contact_address);
 
     }
 
@@ -82,22 +75,28 @@ public class ViewContact extends AppCompatActivity {
 
         if(id == R.id.action_edit) {
             Log.d("tag", "modifico contatto");
-            
-            /*
-            chooseFragment = new ContactsList();
-            getSupportFragmentManager().beginTransaction().add(R.id.container, chooseFragment).commit();
-            Intent intent = new Intent(this, EditContact.class);
-            startActivity(intent);
 
-            */
+            Intent intent = new Intent(this, EditContact.class);
+
+            intent.putExtra("cont", contatto);
+            intent.putExtra("name", contact_name);
+            intent.putExtra("surname", contact_surname);
+            intent.putExtra("number", contact_mobile);
+            intent.putExtra("email", contact_email);
+            intent.putExtra("address", contact_address);
+
+            Log.d("tag", "stai passando i dati alla edit, nome: " + contact_name + " cognome: " + contact_surname);
+
+
+            startActivity(intent);
 
         }
 
 
         if(id == R.id.action_delete) {
 
-            DbHelper helper = new DbHelper(this);
 
+            DbHelper helper = new DbHelper(this);
             Cursor cursor = helper.getContactID(contatto);
 
             int contactID = -1;
@@ -108,27 +107,23 @@ public class ViewContact extends AppCompatActivity {
 
 
 
-                    helper.deleteContact(contactID);
-                    Toast.makeText(this, "Contatto Eliminato", Toast.LENGTH_LONG).show();
-                    Log.d("tag", "Contatto eliminato");
-           /* }
-            else {
-                Toast.makeText(this, "Errore!", Toast.LENGTH_LONG).show();
-                Log.d("tag", "Errore");
-            }
-*/
+            helper.deleteContact(contactID);
+              Toast.makeText(this, "Contatto Eliminato", Toast.LENGTH_LONG).show();
+              Log.d("tag", "Contatto eliminato");
+
 
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
         }
 
 
         if(id == android.R.id.home) {
             //NavUtils.navigateUpFromSameTask(this);
-           /* Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(intent, 0);*/
+            startActivityForResult(intent, 0);
             return true;
         }
 

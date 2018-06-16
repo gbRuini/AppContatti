@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mobdev.appcontatti.EditContact">
 
 
@@ -14,6 +16,204 @@
         android:background="@color/colorPrimary" />
 
 
-    
+    <FrameLayout
+        android:id="@+id/contenitore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.mobdev.appcontatti.EditContact">
 
-</android.support.constraint.ConstraintLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <RelativeLayout
+                    android:id="@+id/relLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="25dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="11dp" />
+
+
+                    <!-- In questo spazio impostare selezione foto -->
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout2"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivPerson"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true" />
+
+
+                    <EditText
+                        android:id="@+id/etContactName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivPerson"
+                        android:hint="Nome"
+                        android:inputType="textNoSuggestions"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout3"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivPersonSurname"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true" />
+
+
+                    <EditText
+                        android:id="@+id/etContactSurname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivPersonSurname"
+                        android:hint="Cognome"
+                        android:inputType="textNoSuggestions"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/relLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout4"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivPhone"
+                        android:layout_width="30dp"
+
+                        android:layout_height="30dp" />
+
+
+                    <EditText
+                        android:id="@+id/etContactPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivPhone"
+                        android:hint="Telefono"
+                        android:inputType="phone"
+                        android:textSize="16sp" />
+
+                    <!--
+
+                Aggiungi modo per selezionare altri tipi di numero
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_below="@id/ivPhone"
+                    android:id="@+id/selectDevice"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="25dp">
+
+                </Spinner>
+                -->
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/relLayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout5"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivEmail"
+                        android:layout_width="30dp"
+
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true" />
+
+
+                    <EditText
+                        android:id="@+id/etContactEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivEmail"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relLayout7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout6"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivMaps"
+                        android:layout_width="30dp"
+
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true" />
+
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivMaps"
+                        android:hint="Indirizzo"
+                        android:inputType="textNoSuggestions"
+
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
+
+</LinearLayout>
