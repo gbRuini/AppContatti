@@ -9,10 +9,10 @@
     android:layout_marginTop="10dp">
 
     <ImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/imageprova"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_person"
+        android:id="@+id/imageC"
         android:layout_alignParentLeft="true"/>
 
 
@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_toRightOf="@+id/imageprova"/>
+        android:layout_toRightOf="@+id/imageC"/>
 
 
 

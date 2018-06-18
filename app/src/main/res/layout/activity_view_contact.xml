@@ -28,7 +28,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="25dp" />
+                android:layout_margin="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,9 +37,13 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:id="@+id/contactName"
-                android:hint="Gabriele Ruini"/>
+                android:hint="Nome Cognome"/>
 
         </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +54,7 @@
 
             <android.support.v7.widget.CardView
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
@@ -66,7 +70,9 @@
                     android:id="@+id/phoneCallBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/phone_icon"/>
+                    android:src="@drawable/phone_icon"
+                    android:background="@null"
+                    android:layout_margin="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +81,7 @@
                     android:textSize="25sp"
                     android:textColor="@color/black"
                     android:id="@+id/PhoneInCardView"
-                    android:hint="numero di telegono"
+                    android:hint="Numero"
                     />
 
             </LinearLayout>
@@ -85,7 +91,7 @@
 
             <android.support.v7.widget.CardView
 
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
@@ -101,7 +107,9 @@
                         android:id="@+id/etAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/phone_icon"/>
+                        android:src="@drawable/ic_map"
+                        android:background="@null"
+                        android:layout_margin="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -120,7 +128,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardViewEmail"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
@@ -136,7 +144,9 @@
                         android:id="@+id/emailImgButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/phone_icon"/>
+                        android:src="@drawable/ic_email"
+                        android:background="@null"
+                        android:layout_margin="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -145,6 +155,43 @@
                         android:textSize="25sp"
                         android:textColor="@color/black"
                         android:id="@+id/emailInCardView"
+                        android:hint="email"
+                        />
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/cardview_light_background"
+                app:cardElevation="@dimen/cardview_default_elevation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/companyImgButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_company"
+                        android:background="@null"
+                        android:layout_margin="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="25sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/companyInCardView"
                         android:hint="email"
                         />
 
@@ -194,6 +241,8 @@
 
         </LinearLayout>
 
+
+    </ScrollView>
 
 
 </LinearLayout>
