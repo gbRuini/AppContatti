@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.mobdev.appcontatti.Model.Contatto;
@@ -33,7 +34,8 @@ public class AddActivity extends AppCompatActivity {
     private static final String TAG = "AddContactFragment";
 
     // dichiaro i vari elementi di ogni contatto
-    private EditText mName, mSurname, mPhoneNumber, mEmail, mAddress;
+    private EditText mName, mSurname, mPhoneNumber, mEmail, mAddress, mCompany;
+    private Spinner mSpinner;
     private String mImagePath;
 
 
@@ -52,8 +54,10 @@ public class AddActivity extends AppCompatActivity {
         mName = (EditText) findViewById(R.id.etContactName);
         mSurname = (EditText) findViewById(R.id.etContactSurname);
         mPhoneNumber = (EditText) findViewById(R.id.etContactPhone);
+        mSpinner = (Spinner) findViewById(R.id.selectDevice);
         mEmail = (EditText) findViewById(R.id.etContactEmail);
         mAddress = (EditText) findViewById(R.id.etAddress);
+        mCompany = (EditText) findViewById(R.id.etCompany);
 
 
 
@@ -100,19 +104,22 @@ public class AddActivity extends AppCompatActivity {
     // salva contatto nel db
     private void saveContact() {
 
-        String nome, cognome, numero, email, indirizzo;
+        String nome, cognome, numero, tipo, email, indirizzo, azienda;
 
         nome = mName.getText().toString();
         cognome = mSurname.getText().toString();
         numero = mPhoneNumber.getText().toString();
+        tipo = mSpinner.getSelectedItem().toString();
         email = mEmail.getText().toString();
         indirizzo = mAddress.getText().toString();
+        azienda = mCompany.getText().toString();
 
         DbHelper dbHelper = new DbHelper(mContext);
-        Contatto contatto = new Contatto(nome, cognome, numero, email, indirizzo);
+        Contatto contatto = new Contatto(nome, cognome, numero, tipo, email, indirizzo, azienda);
 
         if(dbHelper.addContact(contatto)) {
             Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT).show();
+            Log.d("tag", "Il tipo del contatto salvato è: " + tipo);
         } else {
             Toast.makeText(mContext, "Errore nel salvataggio", Toast.LENGTH_SHORT).show();
         }

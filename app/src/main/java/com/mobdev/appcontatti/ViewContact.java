@@ -2,6 +2,7 @@ package com.mobdev.appcontatti;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,13 +19,13 @@ import com.mobdev.appcontatti.Model.Contatto;
 
 public class ViewContact extends AppCompatActivity {
 
-    private TextView cName, cMobile, cAddress, cEmail;
+    private TextView cName, cMobile, cAddress, cEmail, cCompany;
     private ImageButton mPhone;
     private CardView mCardEmail;
 
     private Contatto contatto;
 
-    private String contact_name, contact_surname, contact_mobile, contact_address, contact_email;
+    private String contact_name, contact_surname, contact_mobile, contact_type, contact_address, contact_email, contact_company;
 
 
     @Override
@@ -41,6 +43,9 @@ public class ViewContact extends AppCompatActivity {
         cMobile = findViewById(R.id.PhoneInCardView);
         cEmail = findViewById(R.id.emailInCardView);
         cAddress = findViewById(R.id.etAddress);
+        cCompany = findViewById(R.id.companyInCardView);
+
+        mPhone = (ImageButton) findViewById(R.id.phoneCallBtn);
 
 
         Intent intent = getIntent();
@@ -49,14 +54,27 @@ public class ViewContact extends AppCompatActivity {
         contact_name = intent.getStringExtra("name");
         contact_surname = intent.getStringExtra("surname");
         contact_mobile = intent.getStringExtra("number");
+        contact_type = intent.getStringExtra("type");
         contact_email = intent.getStringExtra("email");
         contact_address = intent.getStringExtra("address");
+        contact_company = intent.getStringExtra("company");
 
 
         cName.setText(contact_name + " " + contact_surname);
         cEmail.setText(contact_email);
         cMobile.setText(contact_mobile);
         cAddress.setText(contact_address);
+        cCompany.setText(contact_company);
+
+
+        mPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(contact_mobile));
+                startActivity(callIntent);
+            }
+        });
 
     }
 
@@ -82,8 +100,10 @@ public class ViewContact extends AppCompatActivity {
             intent.putExtra("name", contact_name);
             intent.putExtra("surname", contact_surname);
             intent.putExtra("number", contact_mobile);
+            intent.putExtra("type", contact_type);
             intent.putExtra("email", contact_email);
             intent.putExtra("address", contact_address);
+            intent.putExtra("company", contact_company);
 
             Log.d("tag", "stai passando i dati alla edit, nome: " + contact_name + " cognome: " + contact_surname);
 

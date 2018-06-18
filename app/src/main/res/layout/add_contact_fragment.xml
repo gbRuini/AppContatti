@@ -216,12 +216,41 @@
                 </RelativeLayout>
 
 
+            <RelativeLayout
+                android:id="@+id/relLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relLayout7"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:id="@+id/ivCompany"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_company"
+                    android:layout_centerVertical="true" />
+
+
+                <EditText
+                    android:id="@+id/etCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/ivCompany"
+                    android:hint="Azienda"
+                    android:inputType="textNoSuggestions"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+
 
 
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/relLayout7">
+                        android:layout_below="@id/relLayout8">
 
                     <TextView
                         android:layout_width="match_parent"

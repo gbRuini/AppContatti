@@ -131,24 +131,17 @@
                         android:inputType="phone"
                         android:textSize="16sp" />
 
-                    <!--
+                    <Spinner
+                        android:id="@+id/selectDevice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_below="@id/etContactPhone"
+                        android:layout_marginLeft="47dp"
+                        android:entries="@array/device_option">
 
-                Aggiungi modo per selezionare altri tipi di numero
+                    </Spinner>
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-
-                    android:textSize="16sp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_below="@id/ivPhone"
-                    android:id="@+id/selectDevice"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="25dp">
-
-                </Spinner>
-                -->
                 </RelativeLayout>
 
 
@@ -205,6 +198,34 @@
                         android:hint="Indirizzo"
                         android:inputType="textNoSuggestions"
 
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relLayout8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relLayout7"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ivCompany"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_company"
+                        android:layout_centerVertical="true" />
+
+
+                    <EditText
+                        android:id="@+id/etCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ivCompany"
+                        android:hint="Azienda"
+                        android:inputType="textNoSuggestions"
                         android:textSize="16sp" />
 
                 </RelativeLayout>

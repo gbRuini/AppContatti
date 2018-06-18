@@ -11,10 +11,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_ADDRESS;
+import static com.mobdev.appcontatti.Model.DbContract.COLUMN_COMPANY;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_EMAIL;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_NAME;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_NUMBER;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_SURNAME;
+import static com.mobdev.appcontatti.Model.DbContract.COLUMN_TYPE;
 import static com.mobdev.appcontatti.Model.DbContract.DATABASE_NAME;
 import static com.mobdev.appcontatti.Model.DbContract.TABLE_NAME;
 import static com.mobdev.appcontatti.Model.DbContract._ID;
@@ -25,7 +27,7 @@ import static com.mobdev.appcontatti.Model.DbContract._ID;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,9 +40,11 @@ public class DbHelper extends SQLiteOpenHelper {
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_SURNAME + " TEXT, " +
-                COLUMN_NUMBER + " VARCHAR(50), " +
+                COLUMN_NUMBER + " VARCHAR(15), " +
+                COLUMN_TYPE + " VARCHAR(15), " +
                 COLUMN_EMAIL + " VARCHAR(100), " +
-                COLUMN_ADDRESS + " TEXT " +
+                COLUMN_ADDRESS + " TEXT, " +
+                COLUMN_COMPANY + " TEXT " +
                 " )";
         db.execSQL(sql);
     }
@@ -59,17 +63,17 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_NAME, contact.getName());
         contentValues.put(COLUMN_SURNAME, contact.getSurname());
         contentValues.put(COLUMN_NUMBER, contact.getPhoneNumber());
+        contentValues.put(COLUMN_TYPE, contact.getTypeNumber());
         contentValues.put(COLUMN_EMAIL, contact.getEmail());
         contentValues.put(COLUMN_ADDRESS, contact.getAddress());
-        //contentValues.put(COL4, contact.getTypeNumber());
+        contentValues.put(COLUMN_COMPANY, contact.getCompany());
 
         //  contentValues.put(COL6, contact.getImageContact());
 
 
         Log.d("tag", "nome: " + contact.getName() + " cognome: " + contact.getSurname() +
                 " numero: " + contact.getPhoneNumber() + " email:" + contact.getEmail() +
-                " indirizzo: " + contact.getAddress());
-
+                " indirizzo: " + contact.getAddress() + " azienda: " + contact.getCompany());
 
 
         // restituisce risultato dalla creazione del db
@@ -98,9 +102,10 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_NAME, contact.getName());
         contentValues.put(COLUMN_SURNAME, contact.getSurname());
         contentValues.put(COLUMN_NUMBER, contact.getPhoneNumber());
+        contentValues.put(COLUMN_TYPE, contact.getTypeNumber());
         contentValues.put(COLUMN_EMAIL, contact.getEmail());
         contentValues.put(COLUMN_ADDRESS, contact.getAddress());
-        //contentValues.put(COL4, contact.getTypeNumber());
+        contentValues.put(COLUMN_COMPANY, contact.getCompany());
 
         //  contentValues.put(COL6, contact.getImageContact());
 

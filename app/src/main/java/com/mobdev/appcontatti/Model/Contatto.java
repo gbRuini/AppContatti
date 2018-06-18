@@ -16,35 +16,47 @@ public class Contatto implements Serializable {
     private String typeNumber;
     private String email;
     private String imageContact;
+    private String company;
 
 
     public Contatto() {
+        }
 
-    }
-
-    public Contatto(String name, String surname, String phoneNumber) {
+    public Contatto(String name, String surname, String phoneNumber, String typeNumber) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
+        this.typeNumber = typeNumber;
     }
 
-    public Contatto(String name, String surname, String phoneNumber, String email) {
+    public Contatto(String name, String surname, String phoneNumber, String typeNumber, String email) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
+        this.typeNumber = typeNumber;
         this.email = email;
     }
 
-    public Contatto(String name, String surname,String phoneNumber, String email, String address) {
+    public Contatto(String name, String surname,String phoneNumber, String typeNumber, String email, String address) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
-      //  this.typeNumber = typeNumber;
+        this.typeNumber = typeNumber;
         this.email = email;
         this.address = address;
-       // this.imageContact = imageContact;
+      //  this.imageContact = imageContact;
     }
 
+    public Contatto(String name, String surname,String phoneNumber, String typeNumber, String email, String address, String company) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.typeNumber = typeNumber;
+        this.email = email;
+        this.address = address;
+        this.company = company;
+        //  this.imageContact = imageContact;
+    }
 
     public int getId() {
         return id;
@@ -104,6 +116,14 @@ public class Contatto implements Serializable {
 
     public void setImageContact(String imageContact) {
         this.imageContact = imageContact;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     @Override

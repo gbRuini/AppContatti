@@ -25,7 +25,6 @@
         android:layout_marginRight="16dp"
         android:background="@drawable/circle"
         android:elevation="10dp"
-        android:src="@drawable/ic_action_content_add_circle_outline"
-        android:text="New Button" />
+        android:src="@drawable/ic_add_trim"/>
 
 </RelativeLayout>

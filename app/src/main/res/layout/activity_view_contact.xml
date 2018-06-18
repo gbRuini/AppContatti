@@ -192,8 +192,7 @@
                         android:textSize="25sp"
                         android:textColor="@color/black"
                         android:id="@+id/companyInCardView"
-                        android:hint="email"
-                        />
+                        android:hint="Company" />
 
                 </LinearLayout>
 

@@ -17,7 +17,8 @@ public class DbContract {
     public static final String COLUMN_SURNAME = "Surname";
     public static final String COLUMN_ADDRESS = "Address";
     public static final String COLUMN_NUMBER = "Mobile";
-    //public static final String COLUMN_TYPE = "DEVICE_TYPE";
+    public static final String COLUMN_TYPE = "DEVICE_TYPE";
     public static final String COLUMN_EMAIL = "Email";
+    public static final String COLUMN_COMPANY = "Company";
    // public static final String COLUMN_IMAGE = "PROFILE_IMAGE";
 }

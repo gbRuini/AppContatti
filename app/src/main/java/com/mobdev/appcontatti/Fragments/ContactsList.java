@@ -146,8 +146,10 @@ public class ContactsList extends Fragment implements SummaryListener {
                     cursor.getString(1),    // nome
                     cursor.getString(2),    // cognome
                     cursor.getString(3),    // numero
-                    cursor.getString(4),   // email
-                    cursor.getString(5)    // indirizzo
+                    cursor.getString(4),    // type
+                    cursor.getString(5),   // email
+                    cursor.getString(6),    // indirizzo
+                    cursor.getString(7)     // azienda
             ));
         }
 
@@ -165,8 +167,10 @@ public class ContactsList extends Fragment implements SummaryListener {
         intent.putExtra("name", contact.getName());
         intent.putExtra("surname", contact.getSurname());
         intent.putExtra("number", contact.getPhoneNumber());
+        intent.putExtra("type", contact.getTypeNumber());
         intent.putExtra("email", contact.getEmail());
         intent.putExtra("address", contact.getAddress());
+        intent.putExtra("company", contact.getCompany());
 
         startActivity(intent);
     }
