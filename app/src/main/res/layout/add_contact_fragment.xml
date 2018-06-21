@@ -53,6 +53,15 @@
 
                     <!-- In questo spazio impostare selezione foto -->
 
+                    <ImageButton
+                        android:id="@+id/choosePhotoBtn"
+                        android:layout_width="29dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_photo"
+                        android:background="@null"
+                        android:layout_alignBottom="@id/profileImage"
+                        android:layout_alignRight="@id/profileImage"/>
+
 
                 </RelativeLayout>
 

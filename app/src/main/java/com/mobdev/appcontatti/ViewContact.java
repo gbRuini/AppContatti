@@ -1,8 +1,14 @@
 package com.mobdev.appcontatti;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -17,15 +23,25 @@ import android.widget.Toast;
 
 import com.mobdev.appcontatti.Model.Contatto;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
+
 public class ViewContact extends AppCompatActivity {
 
     private TextView cName, cMobile, cAddress, cEmail, cCompany;
     private ImageButton mPhone;
-    private CardView mCardEmail;
+    private CardView mCardEmail, mCardAddress, mCardCompany;
 
     private Contatto contatto;
 
     private String contact_name, contact_surname, contact_mobile, contact_type, contact_address, contact_email, contact_company;
+
+
+    private static final String VCF_DIRECTORY = "/vcf_dir";
+    private File vcfFile;
+
 
 
     @Override
@@ -39,6 +55,7 @@ public class ViewContact extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
         cName = findViewById(R.id.contactName);
         cMobile = findViewById(R.id.PhoneInCardView);
         cEmail = findViewById(R.id.emailInCardView);
@@ -46,6 +63,10 @@ public class ViewContact extends AppCompatActivity {
         cCompany = findViewById(R.id.companyInCardView);
 
         mPhone = (ImageButton) findViewById(R.id.phoneCallBtn);
+
+        mCardAddress = (CardView) findViewById(R.id.addressCard);
+        mCardEmail = (CardView) findViewById(R.id.cardViewEmail);
+        mCardCompany = (CardView) findViewById(R.id.cardViewCompany);
 
 
         Intent intent = getIntent();
@@ -61,22 +82,37 @@ public class ViewContact extends AppCompatActivity {
 
 
         cName.setText(contact_name + " " + contact_surname);
-        cEmail.setText(contact_email);
         cMobile.setText(contact_mobile);
-        cAddress.setText(contact_address);
-        cCompany.setText(contact_company);
+
+        if(contact_email.isEmpty()) {
+            mCardEmail.setVisibility(View.GONE);
+        } else {
+            cEmail.setText(contact_email);
+        }
+
+        if(contact_address.isEmpty()) {
+            mCardAddress.setVisibility(View.GONE);
+        } else {
+            cAddress.setText(contact_address);
+        }
+
+        if(contact_company.isEmpty()) {
+            mCardCompany.setVisibility(View.GONE);
+        } else {
+            cCompany.setText(contact_company);
+        }
 
 
         mPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(contact_mobile));
-                startActivity(callIntent);
+                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact_mobile));
+                    startActivity(callIntent);
             }
         });
 
     }
+
 
 
     @Override
@@ -125,8 +161,6 @@ public class ViewContact extends AppCompatActivity {
                 contactID = cursor.getInt(0);
             }
 
-
-
             helper.deleteContact(contactID);
               Toast.makeText(this, "Contatto Eliminato", Toast.LENGTH_LONG).show();
               Log.d("tag", "Contatto eliminato");
@@ -135,6 +169,41 @@ public class ViewContact extends AppCompatActivity {
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
+        }
+
+
+        if(id == R.id.action_share) {
+            setVCard();
+
+            String filename = "contact_"+ contact_name.toUpperCase() + "_" + contact_surname.toUpperCase() + ".vcf";
+
+            File filelocation = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + VCF_DIRECTORY + "/", filename);
+           // File filelocation = new File("/storage/emulated/0/vcf_dir/" + filename);
+            Uri path = FileProvider.getUriForFile(this, "com.mobdev.appcontatti", filelocation);
+
+
+            Log.d("tag", "IL PATH E': " + path);
+
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            //set the type
+            emailIntent.setType("text/x-vcard");
+
+           /* String[] to = {"gabriele.ruini@studenti.unipr.it"};
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+            */
+
+            //the attachment
+            emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+
+            //the mail subject
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "vCard Contact");
+
+
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
 
         }
 
@@ -148,6 +217,37 @@ public class ViewContact extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setVCard(){
+        try {
+            File vdfDirectory = new File(Environment.getExternalStorageDirectory() + VCF_DIRECTORY);
+            if (!vdfDirectory.exists()) {
+                vdfDirectory.mkdirs();
+            }
+
+            vcfFile = new File(vdfDirectory, "contact_"+ contact_name.toUpperCase() + "_" + contact_surname.toUpperCase() + ".vcf");
+
+            Log.d("tag", vdfDirectory.getAbsolutePath());
+
+            FileWriter fw = new FileWriter(vcfFile);
+            fw.write("BEGIN:VCARD\r\n");
+            fw.write("VERSION:3.0\r\n");
+            fw.write("N: " + contact_name + ";" + contact_surname + "\r\n");
+            fw.write("TEL;TYPE=" + contact_type.toUpperCase() +",VOICE:" + contact_mobile + "\r\n");
+            fw.write("ADR:" + contact_address + "\r\n");
+            fw.write("EMAIL;TYPE=PREF:" + contact_email + "\r\n");
+            fw.write("ORG:" + contact_company + "\r\n");
+            fw.write("END:VCARD\r\n");
+            fw.close();
+
+            Log.d("tag","Created vCard");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

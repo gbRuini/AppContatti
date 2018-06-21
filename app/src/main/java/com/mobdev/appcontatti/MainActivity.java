@@ -1,9 +1,13 @@
 package com.mobdev.appcontatti;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,6 +19,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Main";
+
+    private static final String[] CALL_PERSMISSION = { Manifest.permission.CALL_PHONE };
+    private static final String[] MEDIA_PERSMISSION = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MEDIA_CONTENT_CONTROL, Manifest.permission.CAMERA };
 
     private ArrayList<Contatto> list;
     private ContactsList chooseFragment = null;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
 
+        verifyPermission();
 
     }
 
@@ -68,19 +76,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void verifyPermission(){
+        Log.d("tag", "verifyPermission");
 
-/*
-    private void filter(String text) {
-        ArrayList<Contatto> filteredList = new ArrayList<>();
+        int permissionCall = ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+        int permissionMedia = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        for(Contatto item : list) {
-            if(item.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
+
+        if (permissionCall != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, CALL_PERSMISSION, 1);
         }
 
-        myAdapter.filterList(filteredList);
+        if (permissionMedia != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, MEDIA_PERSMISSION, 2);
+        }
     }
-*/
+
 
 }

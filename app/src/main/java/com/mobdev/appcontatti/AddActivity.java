@@ -1,12 +1,16 @@
 package com.mobdev.appcontatti;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,10 +46,13 @@ public class AddActivity extends AppCompatActivity {
     private String mImagePath;
 
 
-    private ImageView prIM;
-    private int GALLERY = 1, CAMERA = 2;
+    // photo
+    private Uri imageCaptureUri;
+    private ImageView mProfileImage;
+    private ImageButton choosePhotoBtn;
+    private static final int CAMERA = 2;
+    private static final int GALLERY = 3;
     private static final String IMAGE_DIRECTORY = "/Download";
-
 
 
     @Override
@@ -67,8 +77,66 @@ public class AddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
+        mProfileImage = (ImageView) findViewById(R.id.profileImage);
+        choosePhotoBtn = (ImageButton) findViewById(R.id.choosePhotoBtn);
+
+        choosePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("tag", "cliccata image camera");
+               showPictureDialog();
+            }
+        });
+
     }
 
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            if(requestCode == CAMERA) {
+                Bundle bundle = data.getExtras();
+                final Bitmap bitmap = (Bitmap) bundle.get("data");
+                mProfileImage.setImageBitmap(bitmap);
+            }
+            if(requestCode == GALLERY) {
+                Uri selectedImageUri = data.getData();
+                mProfileImage.setImageURI(selectedImageUri);
+            }
+        }
+
+
+    /*
+        if (requestCode == PICK_FROM_FILE) {
+            if (data != null) {
+                Uri contentURI = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    String path = saveImage(bitmap);
+                    Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    prIM.setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+        } else if (requestCode == PICK_FROM_CAMERA) {
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            prIM.setImageBitmap(thumbnail);
+            saveImage(thumbnail);
+            Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show();
+        }
+    */
+    }
 
 
     @Override
@@ -114,6 +182,21 @@ public class AddActivity extends AppCompatActivity {
         indirizzo = mAddress.getText().toString();
         azienda = mCompany.getText().toString();
 
+        if(nome.isEmpty()) {
+            Toast.makeText(this, "Inserisci il nome!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(cognome.isEmpty()) {
+            Toast.makeText(this, "Inserisci il cognome!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(numero.isEmpty()) {
+            Toast.makeText(this, "Inserisci il numero!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         DbHelper dbHelper = new DbHelper(mContext);
         Contatto contatto = new Contatto(nome, cognome, numero, tipo, email, indirizzo, azienda);
 
@@ -130,9 +213,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-/*
-        Imposto foto profilo
- */
+
+      //  Imposto foto profilo
 
     private void showPictureDialog(){
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
@@ -169,37 +251,9 @@ public class AddActivity extends AppCompatActivity {
         startActivityForResult(intent, CAMERA);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == this.RESULT_CANCELED) {
-            return;
-        }
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                Uri contentURI = data.getData();
-                /*try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-                    Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
-                    prIM.setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
-                }*/
 
 
-            }
 
-        } else if (requestCode == CAMERA) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            prIM.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
-            Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -229,6 +283,7 @@ public class AddActivity extends AppCompatActivity {
         }
         return "";
     }
+
 }
 
 
