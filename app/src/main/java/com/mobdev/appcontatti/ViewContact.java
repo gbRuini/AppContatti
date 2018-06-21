@@ -111,10 +111,6 @@ public class ViewContact extends AppCompatActivity {
             }
         });
 
-        /*
-            ////
-         */
-
     }
 
 
