@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -29,11 +31,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 public class ViewContact extends AppCompatActivity {
 
     private TextView cName, cMobile, cAddress, cEmail, cCompany;
-    private ImageButton mPhone;
+    private ImageButton mPhone, mMap;
     private ImageView cImage,  cImageBusiness;
     private CardView mCardEmail, mCardAddress, mCardCompany, mCardBusinessImage;
 
@@ -70,6 +73,7 @@ public class ViewContact extends AppCompatActivity {
         cImageBusiness = findViewById(R.id.imageBusinessCard);
 
         mPhone = (ImageButton) findViewById(R.id.phoneCallBtn);
+        mMap = (ImageButton) findViewById(R.id.etAdd);
 
         mCardAddress = (CardView) findViewById(R.id.addressCard);
         mCardEmail = (CardView) findViewById(R.id.cardViewEmail);
@@ -116,9 +120,6 @@ public class ViewContact extends AppCompatActivity {
         }
 
 
-        Log.d("tag", "Il path della card businees è: " + contact_business_image);
-
-
         if(contact_business_image.equalsIgnoreCase("android.resource://com.mobdev.appcontatti/drawable/card_business")) {
             mCardBusinessImage.setVisibility(View.GONE);
         } else {
@@ -133,6 +134,16 @@ public class ViewContact extends AppCompatActivity {
 
                     int permissionCall = ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.CALL_PHONE);
                     startActivity(callIntent);
+            }
+        });
+
+        mMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String map = "http://maps.google.co.in/maps?q=" + contact_address;
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                startActivity(i);
             }
         });
 
