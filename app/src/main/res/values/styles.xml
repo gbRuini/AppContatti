@@ -6,7 +6,7 @@
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/endBlue</item>
-        <item name="colorPrimaryDark">@color/startBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

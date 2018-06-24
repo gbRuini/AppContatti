@@ -116,7 +116,10 @@ public class ViewContact extends AppCompatActivity {
         }
 
 
-        if(contact_business_image.isEmpty()) {
+        Log.d("tag", "Il path della card businees è: " + contact_business_image);
+
+
+        if(contact_business_image.equalsIgnoreCase("android.resource://com.mobdev.appcontatti/drawable/card_business")) {
             mCardBusinessImage.setVisibility(View.GONE);
         } else {
             cImageBusiness.setImageURI(Uri.parse(contact_business_image));

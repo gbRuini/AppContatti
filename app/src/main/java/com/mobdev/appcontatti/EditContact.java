@@ -33,12 +33,12 @@ public class EditContact extends AppCompatActivity {
 
     private Contatto contatto;
 
-    private ImageButton mAddBusiness;
+    private ImageButton mAddBusiness, mClearBusiness;
     private int choose;
 
     // photo
     private Uri mImagePath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
-    private Uri mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
+    private Uri mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/card_business");
     private ImageView mProfileImage;
     private ImageButton choosePhotoBtn;
     private static final int CAMERA = 2;
@@ -81,11 +81,21 @@ public class EditContact extends AppCompatActivity {
         mBusinessImage = (ImageView) findViewById(R.id.imageBusinessCard);
         mAddBusiness = (ImageButton) findViewById(R.id.addBusiness);
 
+        mClearBusiness = (ImageButton) findViewById(R.id.deleteBtn);
+
         mAddBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPictureDialog();
                 choose = 1;
+            }
+        });
+
+        mClearBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contact_business_image = "android.resource://com.mobdev.appcontatti/drawable/card_business";
+                mBusinessImage.setImageURI(Uri.parse(contact_business_image));
             }
         });
 
@@ -173,10 +183,11 @@ public class EditContact extends AppCompatActivity {
 
     private void showPictureDialog(){
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select Action");
+        pictureDialog.setTitle("Scegli:");
         String[] pictureDialogItems = {
-                "Select Photo From Gallery",
-                "Capture Photo From Camera" };
+                "Seleziona Foto Da Galleria",
+                "Scatta Una Foto",
+                "Elimina Foto"};
         pictureDialog.setItems(pictureDialogItems,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -187,6 +198,9 @@ public class EditContact extends AppCompatActivity {
                                 break;
                             case 1:
                                 takePhotoFromCamera();
+                                break;
+                            case 2:
+                                deletePhoto();
                                 break;
                         }
                     }
@@ -206,6 +220,10 @@ public class EditContact extends AppCompatActivity {
         startActivityForResult(cameraIntent, CAMERA);
     }
 
+    private void deletePhoto() {
+        contact_image = "android.resource://com.mobdev.appcontatti/drawable/empty_contact";
+        mProfileImage.setImageURI(Uri.parse(contact_image));
+    }
 
 
     @Override

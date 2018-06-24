@@ -75,13 +75,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
                     Contatto contatto = mDataset.get(position);
                     listener.onClick(contatto);
-
-                    /*
-                    // tramite putExtra passo i dati del contesto in ViewContact
-                    Intent n = new Intent(context, ViewContact.class);
-                    n.putExtra("contatto",  mDataset.get(getAdapterPosition()));
-                    context.startActivity(n);
-                    */
                 }
             });
         }

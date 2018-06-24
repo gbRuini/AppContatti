@@ -52,7 +52,7 @@ public class AddActivity extends AppCompatActivity {
     private int choose;
 
     private Uri mImagePath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
-    private Uri mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
+    private Uri mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/card_business");
 
 
 
@@ -101,8 +101,6 @@ public class AddActivity extends AppCompatActivity {
         mProfileImage.setImageURI(mImagePath);
 
         mBusinessImage = (ImageView) findViewById(R.id.imageBusinessCard);
-        mBusinessImage.setVisibility(View.GONE);
-
         mAddBusiness = (ImageButton) findViewById(R.id.addBusiness);
 
         mAddBusiness.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +111,6 @@ public class AddActivity extends AppCompatActivity {
                 mBusinessImage.setVisibility(View.VISIBLE);
             }
         });
-
-
 
 
     }
@@ -171,34 +167,8 @@ public class AddActivity extends AppCompatActivity {
                 }
                 break;
 
-    }
-
-
-    /*
-        if (requestCode == PICK_FROM_FILE) {
-            if (data != null) {
-                Uri contentURI = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-                    Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                    prIM.setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-        } else if (requestCode == PICK_FROM_CAMERA) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            prIM.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
-            Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show();
         }
-    */
+
     }
 
 
@@ -285,8 +255,9 @@ public class AddActivity extends AppCompatActivity {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
-                "Select Photo From Gallery",
-                "Capture Photo From Camera" };
+                "Segli Foto Dalla Galleria",
+                "Scatta Foto",
+                "Elimina Foto"};
         pictureDialog.setItems(pictureDialogItems,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -297,6 +268,9 @@ public class AddActivity extends AppCompatActivity {
                                 break;
                             case 1:
                                 takePhotoFromCamera();
+                                break;
+                            case 2:
+                                deletePhoto();
                                 break;
                         }
                     }
@@ -317,7 +291,10 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-
+    private void deletePhoto() {
+        mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/card_business");
+        mProfileImage.setImageURI(mBusinessPath);
+    }
 
 /*
     public String saveImage(Bitmap myBitmap) {
