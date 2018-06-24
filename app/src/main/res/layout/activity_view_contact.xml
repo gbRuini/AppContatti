@@ -6,14 +6,219 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mobdev.appcontatti.ViewContact">
-
+    tools:context="com.mobdev.appcontatti.ViewContact"
+    android:background="@color/grayLight">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_awesome_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary" />
+        android:background="@drawable/gradientbackground" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp">
+
+        <LinearLayout
+            android:background="@drawable/gradientbackground"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imageContact"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/empty_contact"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#fff"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"/>
+
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="160dp">
+
+            <TextView
+                android:id="@+id/contactName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome Cognome"
+                android:textColor="@color/startBlue"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_gravity="center"/>
+
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/phoneCallBtn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_phone_blue"/>
+
+                <TextView
+                    android:id="@+id/PhoneInCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="55dp"
+                    android:text="3354433213"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.CardView>
+
+
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewEmail"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/emailImgButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_email_blue"/>
+
+                <TextView
+                    android:id="@+id/emailInCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="55dp"
+                    android:text="giovanni.raae@gmail.com"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.CardView>
+
+
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/addressCard"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/etAdd"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_location_blue"/>
+
+                <TextView
+                    android:id="@+id/etAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="55dp"
+                    android:text="Via Strada, 3"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewCompany"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/companyImgButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_company_blue"/>
+
+                <TextView
+                    android:id="@+id/companyInCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="55dp"
+                    android:text="Parmigiano Reggiano"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"/>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardBusinessCard"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
+
+                <ImageButton
+                    android:id="@+id/addBusiness"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_add"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:id="@+id/imageBusinessCard" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
+
+
+
+    <!--
 
 
 
@@ -200,49 +405,29 @@
 
             </android.support.v7.widget.CardView>
 
-            <!--
+
             <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
+                android:id="@+id/cardBusinessCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
                 app:cardBackgroundColor="@color/cardview_light_background"
-                app:cardElevation="@dimen/cardview_default_elevation"
-                >
+                app:cardElevation="@dimen/cardview_default_elevation">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/imageBusinessCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/adresssMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/phone_icon"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:textSize="25sp"
-                        android:textColor="@color/black"
-                        android:id="@+id/AdressInCardView"
-                        android:hint="Adress"
-                        />
-
-                </LinearLayout>
+                    android:layout_height="200dp" />
 
 
             </android.support.v7.widget.CardView>
 
 
--->
 
         </LinearLayout>
 
 
     </ScrollView>
 
-
-</LinearLayout>
+-->

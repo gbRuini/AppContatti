@@ -1,5 +1,7 @@
 package com.mobdev.appcontatti.Model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
@@ -17,6 +19,7 @@ public class Contatto implements Serializable {
     private String email;
     private String imageContact;
     private String company;
+    private String imageBusinessCard;
 
 
     public Contatto() {
@@ -37,17 +40,17 @@ public class Contatto implements Serializable {
         this.email = email;
     }
 
-    public Contatto(String name, String surname,String phoneNumber, String typeNumber, String email, String address) {
+    public Contatto(String name, String surname, String phoneNumber, String typeNumber, String email, String address, String imageContact) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.typeNumber = typeNumber;
         this.email = email;
         this.address = address;
-      //  this.imageContact = imageContact;
+        this.imageContact = imageContact;
     }
 
-    public Contatto(String name, String surname,String phoneNumber, String typeNumber, String email, String address, String company) {
+    public Contatto(String name, String surname,String phoneNumber, String typeNumber, String email, String address, String company, String imageContact, String imageBusinessCard) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
@@ -55,7 +58,8 @@ public class Contatto implements Serializable {
         this.email = email;
         this.address = address;
         this.company = company;
-        //  this.imageContact = imageContact;
+        this.imageContact = imageContact;
+        this.imageBusinessCard = imageBusinessCard;
     }
 
     public int getId() {
@@ -124,6 +128,14 @@ public class Contatto implements Serializable {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getImageBusinessCard() {
+        return imageBusinessCard;
+    }
+
+    public void setImageBusinessCard(String imageBusinessCard) {
+        this.imageBusinessCard = imageBusinessCard;
     }
 
     @Override

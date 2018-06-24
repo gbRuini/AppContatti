@@ -2,6 +2,7 @@ package com.mobdev.appcontatti;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Main";
 
     private static final String[] CALL_PERSMISSION = { Manifest.permission.CALL_PHONE };
-    private static final String[] MEDIA_PERSMISSION = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MEDIA_CONTENT_CONTROL, Manifest.permission.CAMERA };
+    private static final String[] MEDIA_PERSMISSION = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MEDIA_CONTENT_CONTROL };
+    private static final String[] CAMERA_PERMISSIONE = { Manifest.permission.CAMERA };
 
     private ArrayList<Contatto> list;
     private ContactsList chooseFragment = null;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
 
         verifyPermission();
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         int permissionCall = ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         int permissionMedia = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionCamera = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
 
 
         if (permissionCall != PackageManager.PERMISSION_GRANTED) {
@@ -89,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (permissionMedia != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, MEDIA_PERSMISSION, 2);
+        }
+
+        if(permissionCamera != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, CAMERA_PERMISSIONE, 2);
         }
     }
 

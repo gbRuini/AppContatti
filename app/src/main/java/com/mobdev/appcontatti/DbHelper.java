@@ -13,6 +13,8 @@ import android.util.Log;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_ADDRESS;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_COMPANY;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_EMAIL;
+import static com.mobdev.appcontatti.Model.DbContract.COLUMN_IMAGE;
+import static com.mobdev.appcontatti.Model.DbContract.COLUMN_IMAGE_BUSINESS;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_NAME;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_NUMBER;
 import static com.mobdev.appcontatti.Model.DbContract.COLUMN_SURNAME;
@@ -27,7 +29,7 @@ import static com.mobdev.appcontatti.Model.DbContract._ID;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 6;
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,7 +46,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_TYPE + " VARCHAR(15), " +
                 COLUMN_EMAIL + " VARCHAR(100), " +
                 COLUMN_ADDRESS + " TEXT, " +
-                COLUMN_COMPANY + " TEXT " +
+                COLUMN_COMPANY + " TEXT, " +
+                COLUMN_IMAGE + " TEXT, " +
+                COLUMN_IMAGE_BUSINESS + " TEXT " +
                 " )";
         db.execSQL(sql);
     }
@@ -67,13 +71,13 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_EMAIL, contact.getEmail());
         contentValues.put(COLUMN_ADDRESS, contact.getAddress());
         contentValues.put(COLUMN_COMPANY, contact.getCompany());
-
-        //  contentValues.put(COL6, contact.getImageContact());
+        contentValues.put(COLUMN_IMAGE, contact.getImageContact());
+        contentValues.put(COLUMN_IMAGE_BUSINESS, contact.getImageBusinessCard());
 
 
         Log.d("tag", "nome: " + contact.getName() + " cognome: " + contact.getSurname() +
                 " numero: " + contact.getPhoneNumber() + " email:" + contact.getEmail() +
-                " indirizzo: " + contact.getAddress() + " azienda: " + contact.getCompany());
+                " indirizzo: " + contact.getAddress() + " azienda: " + contact.getCompany() + " imagePath: " + contact.getImageContact());
 
 
         // restituisce risultato dalla creazione del db
@@ -106,8 +110,8 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_EMAIL, contact.getEmail());
         contentValues.put(COLUMN_ADDRESS, contact.getAddress());
         contentValues.put(COLUMN_COMPANY, contact.getCompany());
-
-        //  contentValues.put(COL6, contact.getImageContact());
+        contentValues.put(COLUMN_IMAGE, contact.getImageContact());
+        contentValues.put(COLUMN_IMAGE_BUSINESS, contact.getImageBusinessCard());
 
 
         int update = db.update(TABLE_NAME, contentValues, _ID + " = ? ", new String[] {String.valueOf(id)});

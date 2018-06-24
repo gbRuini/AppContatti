@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +34,12 @@ public class ViewContact extends AppCompatActivity {
 
     private TextView cName, cMobile, cAddress, cEmail, cCompany;
     private ImageButton mPhone;
-    private CardView mCardEmail, mCardAddress, mCardCompany;
+    private ImageView cImage,  cImageBusiness;
+    private CardView mCardEmail, mCardAddress, mCardCompany, mCardBusinessImage;
 
     private Contatto contatto;
 
-    private String contact_name, contact_surname, contact_mobile, contact_type, contact_address, contact_email, contact_company;
+    private String contact_name, contact_surname, contact_mobile, contact_type, contact_address, contact_email, contact_company, contact_image, contact_business_image;
 
 
     private static final String VCF_DIRECTORY = "/vcf_dir";
@@ -52,6 +55,8 @@ public class ViewContact extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.setTitleTextColor(Color.WHITE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -61,12 +66,16 @@ public class ViewContact extends AppCompatActivity {
         cEmail = findViewById(R.id.emailInCardView);
         cAddress = findViewById(R.id.etAddress);
         cCompany = findViewById(R.id.companyInCardView);
+        cImage = findViewById(R.id.imageContact);
+        cImageBusiness = findViewById(R.id.imageBusinessCard);
 
         mPhone = (ImageButton) findViewById(R.id.phoneCallBtn);
 
         mCardAddress = (CardView) findViewById(R.id.addressCard);
         mCardEmail = (CardView) findViewById(R.id.cardViewEmail);
         mCardCompany = (CardView) findViewById(R.id.cardViewCompany);
+        mCardBusinessImage = (CardView) findViewById(R.id.cardBusinessCard);
+
 
 
         Intent intent = getIntent();
@@ -79,10 +88,14 @@ public class ViewContact extends AppCompatActivity {
         contact_email = intent.getStringExtra("email");
         contact_address = intent.getStringExtra("address");
         contact_company = intent.getStringExtra("company");
+        contact_image = intent.getStringExtra("image");
+        contact_business_image = intent.getStringExtra("imageBusiness");
 
 
         cName.setText(contact_name + " " + contact_surname);
         cMobile.setText(contact_mobile);
+        cImage.setImageURI(Uri.parse(contact_image));
+        cImageBusiness.setImageURI(Uri.parse(contact_business_image));
 
         if(contact_email.isEmpty()) {
             mCardEmail.setVisibility(View.GONE);
@@ -103,10 +116,19 @@ public class ViewContact extends AppCompatActivity {
         }
 
 
+        if(contact_business_image.isEmpty()) {
+            mCardBusinessImage.setVisibility(View.GONE);
+        } else {
+            cImageBusiness.setImageURI(Uri.parse(contact_business_image));
+        }
+
+
         mPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact_mobile));
+
+                    int permissionCall = ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.CALL_PHONE);
                     startActivity(callIntent);
             }
         });
@@ -140,6 +162,8 @@ public class ViewContact extends AppCompatActivity {
             intent.putExtra("email", contact_email);
             intent.putExtra("address", contact_address);
             intent.putExtra("company", contact_company);
+            intent.putExtra("image", contact_image);
+            intent.putExtra("imageBusiness", contact_business_image);
 
             Log.d("tag", "stai passando i dati alla edit, nome: " + contact_name + " cognome: " + contact_surname);
 

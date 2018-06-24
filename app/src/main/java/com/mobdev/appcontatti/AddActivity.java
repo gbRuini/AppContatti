@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,16 +47,21 @@ public class AddActivity extends AppCompatActivity {
     // dichiaro i vari elementi di ogni contatto
     private EditText mName, mSurname, mPhoneNumber, mEmail, mAddress, mCompany;
     private Spinner mSpinner;
-    private String mImagePath;
+    private ImageView mBusinessImage;
+    private ImageButton mAddBusiness;
+    private int choose;
+
+    private Uri mImagePath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
+    private Uri mBusinessPath = Uri.parse("android.resource://com.mobdev.appcontatti/drawable/empty_contact");
+
 
 
     // photo
-    private Uri imageCaptureUri;
     private ImageView mProfileImage;
     private ImageButton choosePhotoBtn;
     private static final int CAMERA = 2;
     private static final int GALLERY = 3;
-    private static final String IMAGE_DIRECTORY = "/Download";
+
 
 
     @Override
@@ -69,10 +78,10 @@ public class AddActivity extends AppCompatActivity {
         mAddress = (EditText) findViewById(R.id.etAddress);
         mCompany = (EditText) findViewById(R.id.etCompany);
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -86,29 +95,83 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d("tag", "cliccata image camera");
                showPictureDialog();
+               choose = 0;
             }
         });
+        mProfileImage.setImageURI(mImagePath);
+
+        mBusinessImage = (ImageView) findViewById(R.id.imageBusinessCard);
+        mBusinessImage.setVisibility(View.GONE);
+
+        mAddBusiness = (ImageButton) findViewById(R.id.addBusiness);
+
+        mAddBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPictureDialog();
+                choose = 1;
+                mBusinessImage.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
 
     }
 
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            if(requestCode == CAMERA) {
-                Bundle bundle = data.getExtras();
-                final Bitmap bitmap = (Bitmap) bundle.get("data");
-                mProfileImage.setImageBitmap(bitmap);
-            }
-            if(requestCode == GALLERY) {
-                Uri selectedImageUri = data.getData();
-                mProfileImage.setImageURI(selectedImageUri);
-            }
+        if (resultCode == this.RESULT_CANCELED) {
+            return;
         }
+
+        switch (choose)
+        {
+            case 0:
+                if(requestCode == CAMERA) {
+                    Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                    mProfileImage.setImageBitmap(thumbnail);
+                }
+                if(requestCode == GALLERY) {
+                    if(data != null) {
+                        Uri selectedImageUri = data.getData();
+                        try {
+
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                            mImagePath = selectedImageUri;
+                            mProfileImage.setImageBitmap(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                break;
+            case 1:
+                if(requestCode == CAMERA) {
+                    Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                    mBusinessImage.setImageBitmap(thumbnail);
+                }
+                if(requestCode == GALLERY) {
+                    if(data != null) {
+                        Uri selectedImageUri = data.getData();
+                        try {
+
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                            mBusinessPath = selectedImageUri;
+                            mBusinessImage.setImageBitmap(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                break;
+
+    }
 
 
     /*
@@ -172,7 +235,7 @@ public class AddActivity extends AppCompatActivity {
     // salva contatto nel db
     private void saveContact() {
 
-        String nome, cognome, numero, tipo, email, indirizzo, azienda;
+        String nome, cognome, numero, tipo, email, indirizzo, azienda, imagePath, imageBusinessPath;
 
         nome = mName.getText().toString();
         cognome = mSurname.getText().toString();
@@ -181,6 +244,8 @@ public class AddActivity extends AppCompatActivity {
         email = mEmail.getText().toString();
         indirizzo = mAddress.getText().toString();
         azienda = mCompany.getText().toString();
+        imagePath = mImagePath.toString();
+        imageBusinessPath = mBusinessPath.toString();
 
         if(nome.isEmpty()) {
             Toast.makeText(this, "Inserisci il nome!", Toast.LENGTH_LONG).show();
@@ -198,7 +263,7 @@ public class AddActivity extends AppCompatActivity {
         }
 
         DbHelper dbHelper = new DbHelper(mContext);
-        Contatto contatto = new Contatto(nome, cognome, numero, tipo, email, indirizzo, azienda);
+        Contatto contatto = new Contatto(nome, cognome, numero, tipo, email, indirizzo, azienda, imagePath, imageBusinessPath);
 
         if(dbHelper.addContact(contatto)) {
             Toast.makeText(mContext, "Contatto Salvato!", Toast.LENGTH_SHORT).show();
@@ -247,14 +312,14 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
+        Intent cameraIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        startActivityForResult(cameraIntent, CAMERA);
     }
 
 
 
 
-
+/*
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -283,6 +348,9 @@ public class AddActivity extends AppCompatActivity {
         }
         return "";
     }
+    */
+
+
 
 }
 

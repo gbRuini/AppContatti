@@ -149,7 +149,9 @@ public class ContactsList extends Fragment implements SummaryListener {
                     cursor.getString(4),    // type
                     cursor.getString(5),   // email
                     cursor.getString(6),    // indirizzo
-                    cursor.getString(7)     // azienda
+                    cursor.getString(7),     // azienda
+                    cursor.getString(8),   // imagePath
+                    cursor.getString(9)     // imageBusinessCardPath
             ));
         }
 
@@ -171,6 +173,8 @@ public class ContactsList extends Fragment implements SummaryListener {
         intent.putExtra("email", contact.getEmail());
         intent.putExtra("address", contact.getAddress());
         intent.putExtra("company", contact.getCompany());
+        intent.putExtra("image", contact.getImageContact());
+        intent.putExtra("imageBusiness", contact.getImageBusinessCard());
 
         startActivity(intent);
     }
@@ -197,6 +201,7 @@ public class ContactsList extends Fragment implements SummaryListener {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void filter(String text) {
         ArrayList<Contatto> filteredList = new ArrayList<>();
 
@@ -205,14 +210,10 @@ public class ContactsList extends Fragment implements SummaryListener {
                     item.getSurname().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
-/*
 
-kjgkjhjkhkhkjh
- */
         }
 
         myAdapter.filterList(filteredList);
-      //  mRecyclerView.setAdapter(myAdapter);
     }
 
 }

@@ -1,5 +1,9 @@
 package com.mobdev.appcontatti.Model;
 
+
+
+import java.net.URI;
+
 /**
  * Created by gabriele on 13/06/18.
  */
@@ -20,5 +24,7 @@ public class DbContract {
     public static final String COLUMN_TYPE = "DEVICE_TYPE";
     public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_COMPANY = "Company";
-   // public static final String COLUMN_IMAGE = "PROFILE_IMAGE";
+    public static final String COLUMN_IMAGE = "PROFILE_IMAGE";
+    public static final String COLUMN_IMAGE_BUSINESS = "BUSINESS_IMAGE";
+
 }

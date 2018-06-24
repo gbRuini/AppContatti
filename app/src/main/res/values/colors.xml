@@ -6,4 +6,10 @@
     <color name="white">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gray_border">#9EAAB8</color>
+
+    <color name="primaryDark">#292B3D</color>
+    <color name="grayLight">#FAFAFA</color>
+    <color name="startBlue">#09c6df</color>
+    <color name="endBlue">#0bcce6</color>
+
 </resources>
